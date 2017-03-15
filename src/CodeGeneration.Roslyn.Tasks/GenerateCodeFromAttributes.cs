@@ -55,9 +55,12 @@ namespace CodeGeneration.Roslyn.Tasks
         {
 #if NET46
             // Run under our own AppDomain so we can control the version of Roslyn we load.
-            var appDomainSetup = new AppDomainSetup();
-            appDomainSetup.ApplicationBase = Path.GetDirectoryName(this.GetType().Assembly.Location);
-            appDomainSetup.ConfigurationFile = Assembly.GetExecutingAssembly().Location + ".config";
+            var appDomainSetup = new AppDomainSetup
+            {
+                ApplicationBase = Path.GetDirectoryName(this.GetType().Assembly.Location),
+                ConfigurationFile = Assembly.GetExecutingAssembly().Location + ".config",
+                LoaderOptimization = LoaderOptimization.MultiDomain,
+            };
             var appDomain = AppDomain.CreateDomain("codegen", AppDomain.CurrentDomain.Evidence, appDomainSetup);
             AppDomain.CurrentDomain.AssemblyResolve += this.CurrentDomain_AssemblyResolve;
 #else
