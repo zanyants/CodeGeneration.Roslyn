@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net46;netcoreapp1.0</TargetFrameworks>
-    <AssemblyOriginatorKeyFile>..\opensource.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile Condition=" $(AssemblyOriginatorKeyFile) == '' ">..\opensource.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
     <IsPackable>false</IsPackable>

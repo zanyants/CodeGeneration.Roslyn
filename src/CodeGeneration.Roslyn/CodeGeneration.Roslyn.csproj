@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard1.3</TargetFrameworks>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\opensource.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile Condition=" $(AssemblyOriginatorKeyFile) == '' ">..\opensource.snk</AssemblyOriginatorKeyFile>
     <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
     <Description>A package that offers libraries for creating a code generation attribute and the associated generator.</Description>
   </PropertyGroup>
