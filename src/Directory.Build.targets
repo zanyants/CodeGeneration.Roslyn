@@ -2,5 +2,6 @@
   <PropertyGroup>
     <!-- Roslyn can't really sign assemblies on .NET Core -->
     <PublicSign Condition=" '$(SignAssembly)' == 'true' and '$(MSBuildRuntimeType)' == 'Core' ">true</PublicSign>
+    <PackageId>$(AssemblyName).ZA</PackageId>
   </PropertyGroup>
 </Project>
