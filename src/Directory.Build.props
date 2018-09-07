@@ -11,8 +11,8 @@
     <RepositoryUrl>https://github.com/aarnott/CodeGeneration.Roslyn</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <IsPackable Condition=" $(MSBuildProjectName.Contains('Test')) ">false</IsPackable>
-
-    <NerdbankGitVersioningVersion>1.6.25</NerdbankGitVersioningVersion>
+    
+    <NerdbankGitVersioningVersion>2.1.23</NerdbankGitVersioningVersion>
   </PropertyGroup>
 
   <ItemGroup>
