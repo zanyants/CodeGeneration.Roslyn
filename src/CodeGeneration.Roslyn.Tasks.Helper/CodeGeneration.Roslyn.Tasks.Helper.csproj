@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
-    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="14.3" />
+    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="15.1.548" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp1.0'">
