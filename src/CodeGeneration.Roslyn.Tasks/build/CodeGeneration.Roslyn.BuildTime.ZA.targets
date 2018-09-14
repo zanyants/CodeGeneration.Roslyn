@@ -2,7 +2,7 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <CodeGenerationRoslynToolsPath Condition=" '$(CodeGenerationRoslynToolsPath)' == '' ">$(CodeGenerationRoslynToolsRootPath)$(CodeGenerationRoslynToolsSubPath)</CodeGenerationRoslynToolsPath>
-
+    <CodeGenerationRoslynFilesListFile>$(IntermediateOutputPath)_CodeGeneration.Roslyn.GeneratedFiles.txt</CodeGenerationRoslynFilesListFile>
     <PrepareResourcesDependsOn>
       GenerateCodeFromAttributes;
       $(PrepareResourcesDependsOn)
@@ -16,7 +16,7 @@
 
   <UsingTask TaskName="GenerateCodeFromAttributes" AssemblyFile="$(CodeGenerationRoslynToolsPath)CodeGeneration.Roslyn.Tasks.dll" />
 
-  <Target Name="GenerateCodeFromAttributes" DependsOnTargets="ResolveReferences" BeforeTargets="CoreCompile">
+  <Target Name="GenerateCodeFromAttributes" DependsOnTargets="ResolveReferences" BeforeTargets="CoreCompile" Inputs="@(Compile)" Outputs="$(CodeGenerationRoslynFilesListFile)" >
     <GenerateCodeFromAttributes
       Compile="@(Compile)"
       ReferencePath="@(ReferencePath)"
@@ -27,8 +27,25 @@
       <Output TaskParameter="GeneratedCompile" ItemName="FileWrites" />
       <Output TaskParameter="AdditionalWrittenFiles" ItemName="FileWrites" />
     </GenerateCodeFromAttributes>
-    <ItemGroup>
-      <Compile Include="@(GeneratedCodeFromAttribute_Compile)" />
-    </ItemGroup>
+    <WriteLinesToFile
+      File="$(CodeGenerationRoslynFilesListFile)"
+      Lines="@(GeneratedCodeFromAttribute_Compile)"
+      Overwrite="true"
+      Encoding="utf-8" />
+    <Touch
+      Files="$(CodeGenerationRoslynFilesListFile)"
+      Time="$([System.DateTime]::UtcNow.AddSeconds(1).ToString('o'))" />
+  </Target>
+
+  <Target Name="GenerateCodeFromAttributes_After" AfterTargets="GenerateCodeFromAttributes">
+    <ReadLinesFromFile
+      File="$(CodeGenerationRoslynFilesListFile)">
+      <Output
+        TaskParameter="Lines"
+        ItemName="Compile" />
+      <Output
+        TaskParameter="Lines"
+        ItemName="FileWrites" />
+    </ReadLinesFromFile>
   </Target>
 </Project>
