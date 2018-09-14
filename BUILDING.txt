@@ -1,0 +1,14 @@
+# To build on a local dev system - paraphrased from appveyor.yml:
+
+# NB: restore twice:
+msbuild src\CodeGeneration.Roslyn.sln /p:Configuration=Release /nologo /m /v:quiet /t:restore
+msbuild src\CodeGeneration.Roslyn.sln /p:Configuration=Release /nologo /m /v:quiet /t:restore
+
+msbuild src\CodeGeneration.Roslyn.sln /p:Configuration=Release /nologo /m /v:minimal /t:build,pack
+
+# To make a final public build for a given commit (so no git commit id as part of the version), include /p:PublicRelease=true in all statements:
+msbuild src\CodeGeneration.Roslyn.sln /p:Configuration=Release;PublicRelease=true /nologo /m /v:quiet /t:restore
+msbuild src\CodeGeneration.Roslyn.sln /p:Configuration=Release;PublicRelease=true /nologo /m /v:quiet /t:restore
+
+msbuild src\CodeGeneration.Roslyn.sln /p:Configuration=Release;PublicRelease=true /nologo /m /v:minimal /t:build,pack
+
